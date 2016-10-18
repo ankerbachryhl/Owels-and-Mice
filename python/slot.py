@@ -15,7 +15,6 @@ class Slot(object):
     def canAddOwel(self):
         return self.num_owl < 1
 
-
 # Tilfaejer en mus eller en ugle til feltet, hvis man f.eks tilfaejer tre mus skal den
 #stoppe programmet
     def addAnimal(animal, self):
@@ -45,3 +44,9 @@ class Slot(object):
                 raise Exception("Tried to remove an owl that didn't exixst")
             else:
                 self.num_owel -= 1
+
+# Retunerer en liste over hvad der er  i slottet
+# {numMice: 2, numOwes : 0, hasRock : False}
+    def dicSlot(self):
+        slotDic = {'numMice' :  self.num_mice, 'numOwels':  self.num_owls, 'hasRock' : self.hasRock}
+        return slotDic
