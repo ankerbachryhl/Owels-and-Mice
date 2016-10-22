@@ -8,7 +8,3 @@ class Thing(object):
         self.mice = 150
         self.owls = 2
         self.stones = 10
-
-    #Hvor er tingen / hvilken slot er den paa
-    def currentSlot(currentSlot):
-        return currentSlot
