@@ -3,7 +3,7 @@ from thing import Thing
 from animal import Animal
 import threading
 import random
-
+from mouse import Mouse
 
 
 
@@ -20,6 +20,12 @@ class Sim(Animal):
         self.currentMouseSlots = []
         self.currentOwlSlots = []
         self.MouseNumber = 0
+
+        self.allMices1 = []
+
+        self.allMices = []
+
+        self.random = []
         self.randomSpawn()
 
     #Spawner alle tingene random med foreloop og putter dem ind i et grid, give dem alle sammen en currentSlot
@@ -32,6 +38,8 @@ class Sim(Animal):
                 if currentMouseSlot.num_mice < 2:
                     currentMouseSlot.addAnimal("mouse")
                     self.MouseNumber += 1
+                    self.allMices.append(Mouse(x, y, 'x'))
+
         for i in range(self.numOwels):
             x = random.randrange(1,19)
             y = random.randrange(1,19)
@@ -57,6 +65,7 @@ class Sim(Animal):
 
     def checkForMouse(self):
         self.currentMouseSlots = []
+
         for i in range(0, 22):
             for j in range(0, 22):
                 if self.grid[i][j].num_mice == 1:
@@ -80,18 +89,82 @@ class Sim(Animal):
                     self.currentOwlSlots.append(self.grid[i][j])
 
 
+    # def checkForAllMices(self):
+    #     for i in range(len(self.currentMouseSlots)):
+    #         self.allMices[i].mouse_steps += 1
+
+
+    # def ggcomeon(self):
+    #     for i in range(len(self.currentMouseSlots)):
+    #         steps = self.allMices[i].mouse_steps
+    #         self.random.append(Mouse())
+    #         self.random[i].mouse_steps + steps
+    #         self.random[i].checkIfDead()
+    #         if self.random[i].dead == True:
+    #             self.grid[self.currentMouseSlots[i].cordI][self.currentMouseSlots[i].cordJ].rmAnimal("mouse")
+    #         self.allMices = []
+    #
+    #
+    #
+
 
     #Med foreloop gaa igennem fx. hver mus og kald mouseMove og brug rmAnimal and addAnimal
     def moveMouse(self):
         self.checkForMouse()
         print(len(self.currentMouseSlots))
-        for i in range(len(self.currentMouseSlots)):
-            currentMouseSlot = self.currentMouseSlots[i]
-            currentMouseSlotI = self.currentMouseSlots[i].cordI
-            currentMouseSlotJ = self.currentMouseSlots[i].cordJ
-            self.getNeighbors(currentMouseSlot, currentMouseSlotI, currentMouseSlotJ)
-            self.mouseMoveRules(currentMouseSlot, currentMouseSlotI, currentMouseSlotJ)
-            self.newMouse(currentMouseSlot)
+        for i in range(len(self.allMices)):
+            if hasattr(self.allMices[i], 'x'):
+                currentMouseSlot = self.grid[self.allMices[i].x][self.allMices[i].y]
+                currentMouseSlotI = self.allMices[i].x
+                currentMouseSlotJ = self.allMices[i].y
+
+                value = currentMouseSlot.dicSlot()
+                self.owlEat(value, currentMouseSlot)
+
+                if self.mouseEaten == True:
+                    self.allMices[i] = self.allMices[:i] + self.allMices[i+1 :]
+                else:
+
+                    if(self.allMices[i].mouse_steps == 20):
+                        currentMouseSlot.rmAnimal("mouse")
+                        self.allMices[i] = self.allMices[:i] + self.allMices[i+1 :]
+                        self.MouseNumber -= 1
+                    else:
+                        self.newMouse(currentMouseSlot)
+                        self.getNeighbors(currentMouseSlot, currentMouseSlotI, currentMouseSlotJ)
+                        self.mouseMoveRules(currentMouseSlot, currentMouseSlotI, currentMouseSlotJ)
+                        self.allMices[i].mouse_steps += 1
+
+
+                        if self.movedN == True:
+                            self.allMices[i].x = self.nSlot.cordI
+                            self.allMices[i].y = self.nSlot.cordJ
+                        if self.movedNE == True:
+                            self.allMices[i].x = self.neSlot.cordI
+                            self.allMices[i].y = self.neSlot.cordJ
+                        if self.movedE == True:
+                            self.allMices[i].x = self.eSlot.cordI
+                            self.allMices[i].y = self.eSlot.cordJ
+                        if self.movedSE == True:
+                            self.allMices[i].x = self.seSlot.cordI
+                            self.allMices[i].y = self.seSlot.cordJ
+                        if self.movedS == True:
+                            self.allMices[i].x = self.sSlot.cordI
+                            self.allMices[i].y = self.sSlot.cordJ
+                        if self.movedSW == True:
+                            self.allMices[i].x = self.swSlot.cordI
+                            self.allMices[i].y = self.swSlot.cordJ
+                        if self.movedW == True:
+                            self.allMices[i].x = self.wSlot.cordI
+                            self.allMices[i].y = self.wSlot.cordJ
+                        if self.movedNW == True:
+                            self.allMices[i].x = self.nwSlot.cordI
+                            self.allMices[i].y = self.nwSlot.cordJ
+
+
+
+                # self.newMouse(currentMouseSlot)
+
 
     def moveOwl(self):
         self.checkForOwl()
@@ -107,11 +180,21 @@ class Sim(Animal):
 
     #Styrere steps
     def steps(self):
-        threading.Timer(5.0, self.steps).start()
-        self.moveMouse()
-        self.moveOwl()
-        self.print_ten_Slots()
-        print(self.MouseNumber)
+        numSteps = 1
+
+        while numSteps > 0:
+            print "How many steps do you wanna run? Press 0 to stop! "
+            numSteps = input()
+            for i in range(numSteps):
+                self.moveMouse()
+                self.moveOwl()
+            self.print_ten_Slots()
+            print(self.MouseNumber)
+            if self.MouseNumber == 0:
+                print 'All the mouses died so the simulation has ended, goodbye!'
+                print 'number of owls left: ', len(self.currentOwlSlots)
+                numSteps = 0
+
 
 
 simulation_one = Sim()

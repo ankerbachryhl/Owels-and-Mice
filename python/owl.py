@@ -4,16 +4,22 @@ import random
 class Owl(Mouse):
 
     def __init__(self):
-        Mouse.__init__(self)
+        Mouse.__init__(self, 0, 0, 0)
+        self.mouseEaten = False
 
     #Draeber en mus
     def owlEat(self, currentSlot, currentOwlSlot):
-        if currentSlot['numMice'] == 1:
+        self.mouseEaten = False
+        if currentSlot['numOwels'] == 1 and currentSlot['numMice'] == 1:
             currentOwlSlot.rmAnimal("mouse")
             self.MouseNumber -= 1
-        elif currentSlot['numMice'] == 2:
+            print 'a mouse has been eaten muhaaaa'
+            self.mouseEaten = True
+        elif currentSlot['numOwels'] == 1 and currentSlot['numMice'] == 2:
             currentOwlSlot.rmAnimal("mouse")
             self.MouseNumber -= 1
+            print 'a mouse has been eaten muhaaaa'
+            self.mouseEaten = True
 
     def owlMoveRules(self, currentSlot):
         rand_one = random.randrange(0,2)

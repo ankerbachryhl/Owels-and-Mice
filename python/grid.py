@@ -65,6 +65,7 @@ class Grid(object):
 
     def getNeighbors(self, currentSlot, currentSlotI, currentSlotJ):
 
+
         if self.grid[self.checkValuesI(currentSlotI)][self.checkValuesJ(currentSlotJ - 1)].cordJ < 1:
             self.nSlot = currentSlot
         else:
@@ -259,6 +260,7 @@ class Grid(object):
         return self.swSlot
         return self.wSlot
         return self.nwSlot
+
         # Return all Owl directions
         return self.moveOwlDic
         return self.nnSlot
@@ -277,6 +279,8 @@ class Grid(object):
         return self.nwwSlot
         return self.nnwwSlot
         return self.nnwSlot
+
+
 
     # printer alle felter ud i terminalen
     def print_ten_Slots(self):

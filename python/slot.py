@@ -39,7 +39,8 @@ class Slot(object):
     def rmAnimal(self, animal):
         if(animal == "mouse"):
             if (self.num_mice == 0):
-                raise Exception('tried to remove a mouse that didn*t exixst')
+                # raise Exception('tried to remove a mouse that didn*t exixst')
+                raise Exception('it tried to remove a mouse that didn*t fucking exixst')
             else:
                 self.num_mice -= 1
         if(animal == "owl"):
