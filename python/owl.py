@@ -13,12 +13,10 @@ class Owl(Mouse):
         if currentSlot['numOwels'] == 1 and currentSlot['numMice'] == 1:
             currentOwlSlot.rmAnimal("mouse")
             self.MouseNumber -= 1
-            print 'a mouse has been eaten muhaaaa'
             self.mouseEaten = True
         elif currentSlot['numOwels'] == 1 and currentSlot['numMice'] == 2:
             currentOwlSlot.rmAnimal("mouse")
             self.MouseNumber -= 1
-            print 'a mouse has been eaten muhaaaa'
             self.mouseEaten = True
 
     def owlMoveRules(self, currentSlot):

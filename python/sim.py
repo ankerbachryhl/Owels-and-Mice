@@ -15,7 +15,7 @@ class Sim(Animal):
         # Grid.__init__(self)
         Animal.__init__(self)
         self.numOwels = 2
-        self.rocks = 5
+        self.rocks = 10
 
         self.currentMouseSlots = []
         self.currentOwlSlots = []

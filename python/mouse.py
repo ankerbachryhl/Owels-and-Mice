@@ -75,7 +75,7 @@ class Mouse(GG):
         rand_one = random.randrange(0,2)
         possibleDirections = []
         stoneSpots = []
-        owlAndHide = False
+        self.owlAndHide = False
 
         self.movedN = False
         self.movedNE = False
@@ -93,21 +93,17 @@ class Mouse(GG):
             if self.moveMouseDic[key]['hasRock'] == True:
                 stoneSpots.append(key)
             if self.moveMouseDic[key]['numOwels'] == 1 and len(stoneSpots) > 0:
-                owlAndHide = True
-                return owlAndHide
+                self.owlAndHide = True
             else:
                 pass
 
-
         if len(possibleDirections) > 0:
-            if owlAndHide == True:
-                print 'wuhuuu owl and hide = True'
-                print 'wuhuuu owl and hide = True'
-                print 'wuhuuu owl and hide = True'
-                print 'wuhuuu owl and hide = True'
-                print 'wuhuuu owl and hide = True'
+            if self.owlAndHide == True:
+                print 'wuhuuu owl and hide = true'
                 rand_two = random.randrange(len(stoneSpots))
-                if stoneSpots[rand_two] == 'N':
+                self.stoneDirections = rand_two
+
+                if self.stoneDirections  == 'N':
                     self.nSlot.addAnimal("mouse")
                     currentSlot.rmAnimal("mouse")
                     # self.x = self.nSlot.cordI
@@ -115,7 +111,7 @@ class Mouse(GG):
                     # return self.x
                     # return self.y
                     self.movedN = True
-                if stoneSpots[rand_two] == 'NE':
+                if self.stoneDirections  == 'NE':
                     self.neSlot.addAnimal("mouse")
                     currentSlot.rmAnimal("mouse")
                     # self.x = self.neSlot.cordI
@@ -123,7 +119,7 @@ class Mouse(GG):
                     # return self.x
                     # return self.y
                     self.movedNE = True
-                if stoneSpots[rand_two] == 'E':
+                if self.stoneDirections  == 'E':
                     self.eSlot.addAnimal("mouse")
                     currentSlot.rmAnimal("mouse")
                     # self.x = self.eSlot.cordI
@@ -131,7 +127,7 @@ class Mouse(GG):
                     # return self.x
                     # return self.y
                     self.movedE = True
-                if stoneSpots[rand_two] == 'SE':
+                if self.stoneDirections == 'SE':
                     self.seSlot.addAnimal("mouse")
                     currentSlot.rmAnimal("mouse")
                     # self.x = self.seSlot.cordI
@@ -139,7 +135,7 @@ class Mouse(GG):
                     # return self.x
                     # return self.y
                     self.movedSE = True
-                if stoneSpots[rand_two] == 'S':
+                if self.stoneDirections == 'S':
                     self.sSlot.addAnimal("mouse")
                     currentSlot.rmAnimal("mouse")
                     # self.x = self.sSlot.cordI
@@ -147,7 +143,7 @@ class Mouse(GG):
                     # return self.x
                     # return self.y
                     self.movedS = True
-                if stoneSpots[rand_two] == 'SW':
+                if self.stoneDirections == 'SW':
                     self.swSlot.addAnimal("mouse")
                     currentSlot.rmAnimal("mouse")
                     # self.x = self.swSlot.cordI
@@ -155,7 +151,7 @@ class Mouse(GG):
                     # return self.x
                     # return self.y
                     self.movedSW = True
-                if stoneSpots[rand_two] == 'W':
+                if self.stoneDirections == 'W':
                     self.wSlot.addAnimal("mouse")
                     currentSlot.rmAnimal("mouse")
                     # self.x = self.wSlot.cordI
@@ -163,7 +159,7 @@ class Mouse(GG):
                     # return self.x
                     # return self.y
                     self.movedW = True
-                if stoneSpots[rand_two] == 'NW':
+                if self.stoneDirections == 'NW':
                     self.nwSlot.addAnimal("mouse")
                     currentSlot.rmAnimal("mouse")
                     # self.x = self.nwSlot.cordI
@@ -171,7 +167,6 @@ class Mouse(GG):
                     # return self.x
                     # return self.y
                     self.movedNW = True
-
 
             else:
                 rand_three = random.randrange(len(possibleDirections))
