@@ -1,4 +1,4 @@
-//Prøv imorgen at lave en ny grid for hver ny mus. Istedet for en masse mus på en grid.
+//Proev imorgen at lave en ny grid for hver ny mus. Istedet for en masse mus paa en grid.
 
 var population;
 var cols, rows;
@@ -130,7 +130,7 @@ function Mouse(i, j) {
     // var right = grid[index(i+1, j)];
     // var bottom = grid[index(i, j+1)];
     // var left = grid[index(i-1, j)];
-    // //Add more neighbors like: i-1, j+1 = venstre hjørne
+    // //Add more neighbors like: i-1, j+1 = venstre hjoerne
     //
     // if (top && !top.visited) {
     //   neighbors.push(top)
@@ -180,7 +180,7 @@ function Cells(i, j) {
     var right = grid[index(i+1, j)];
     var bottom = grid[index(i, j+1)];
     var left = grid[index(i-1, j)];
-    //Add more neighbors like: i-1, j+1 = venstre hjørne
+    //Add more neighbors like: i-1, j+1 = venstre hjoerne
 
     if (top) {
       neighbors.push(top)

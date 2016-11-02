@@ -283,7 +283,7 @@ function Next(i,j) {
       }
 
 
-      //Proplem der skal løses imorgen: Hvis de er ude i kanten og for eksempel left ikke findes og choice = 3 så står de stille...
+      //Proplem der skal loeses imorgen: Hvis de er ude i kanten og for eksempel left ikke findes og choice = 3 saa staar de stille...
 
 
 
@@ -309,4 +309,4 @@ function Next(i,j) {
     //   } else
     // }
 
-//Grunden er at når de alle sammen skifter fra active:true til active:false sår stoper update function med at update.
+//Grunden er at naar de alle sammen skifter fra active:true til active:false saar stoper update function med at update.

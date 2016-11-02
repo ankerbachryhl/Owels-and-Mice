@@ -3,17 +3,21 @@ from slot import Slot
 
 class Grid(object):
 
+    #Laver griddet
     def __init__(self):
         self.grid = [[0 for x in range(0, 22)] for x in range(0, 22)]
         self.createSlot()
         self.moveMouseDic = {}
+        self.moveOwlDic = {}
 
-    # Skriv kode der laver et slot i hvert plads i griddet.
+    #Laver en slot i hver plads i griddet
     def createSlot(self):
         for i in range(0, 22):
             for j in range(0, 22):
                 self.grid[i][j] = Slot(i, j)
 
+
+    #Bruges til at forhindre at de stepper uden for murene
     def checkValuesI(self, i):
         self.gg = False
         if i < 1:
@@ -63,9 +67,10 @@ class Grid(object):
             return j
 
 
+    #Returnere alle musenes naboere og uglernes naboere
     def getNeighbors(self, currentSlot, currentSlotI, currentSlotJ):
 
-
+        #North
         if self.grid[self.checkValuesI(currentSlotI)][self.checkValuesJ(currentSlotJ - 1)].cordJ < 1:
             self.nSlot = currentSlot
         else:
@@ -81,8 +86,6 @@ class Grid(object):
 
         #North West
         if self.grid[self.checkValuesI(currentSlotI - 1)][self.checkValuesJ(currentSlotJ - 1)].cordI < 1:
-            self.nwSlot = currentSlot
-        elif self.grid[self.checkValuesI(currentSlotI - 1)][self.checkValuesJ(currentSlotJ - 1)].cordJ > 19:
             self.nwSlot = currentSlot
         elif self.grid[self.checkValuesI(currentSlotI - 1)][self.checkValuesJ(currentSlotJ - 1)].cordJ < 1:
             self.nwSlot = currentSlot
@@ -104,7 +107,6 @@ class Grid(object):
             self.seSlot = self.grid[currentSlotI + 1][currentSlotJ + 1]
 
         #South
-
         if self.grid[self.checkValuesI(currentSlotI)][self.checkValuesJ(currentSlotJ + 1)].cordJ > 19:
             self.sSlot = currentSlot
         else:
@@ -124,18 +126,19 @@ class Grid(object):
         else:
             self.wSlot = self.grid[currentSlotI - 1][currentSlotJ]
 
-
-        #Mouse Radius Dic
+        #Muse naboer dict
 
         self.moveMouseDic = {'N'    :   self.nSlot.dicSlot(),   'NE'    :   self.neSlot.dicSlot(),  'E' :   self.eSlot.dicSlot(),   'NW'    :   self.nwSlot.dicSlot(),  'SE'    :   self.seSlot.dicSlot(),  'S' :   self.sSlot.dicSlot(),   'SW'    :   self.swSlot.dicSlot(),  'W' :  self.wSlot.dicSlot()}
 
-        #Owl neighbors
+        #Ugle naboere (dobbelt saa stor synsradius)
+
         #North
         if self.grid[self.checkOwlValuesI(currentSlotI)][self.checkOwlValuesJ(currentSlotJ - 2)].cordJ < 2:
             self.nnSlot = currentSlot
         else:
             self.nnSlot = self.grid[currentSlotI][currentSlotJ - 2]
 
+        #North East
         if self.grid[self.checkOwlValuesI(currentSlotI + 1)][self.checkOwlValuesJ(currentSlotJ - 2)].cordI > 18:
             self.nneSlot = currentSlot
         elif self.grid[self.checkOwlValuesI(currentSlotI + 1)][self.checkOwlValuesJ(currentSlotJ - 1)].cordJ < 2:
@@ -214,12 +217,10 @@ class Grid(object):
             self.swwSlot = self.grid[currentSlotI - 2][currentSlotJ + 1]
 
         #West
-        #West
         if self.grid[self.checkOwlValuesI(currentSlotI - 2)][self.checkOwlValuesJ(currentSlotJ)].cordI < 2:
             self.wwSlot = currentSlot
         else:
             self.wwSlot = self.grid[currentSlotI - 2][currentSlotJ]
-
 
         #North West
         if self.grid[self.checkOwlValuesI(currentSlotI - 2)][self.checkOwlValuesJ(currentSlotJ - 1)].cordI < 2:
@@ -243,14 +244,11 @@ class Grid(object):
         else:
             self.nnwSlot = self.grid[currentSlotI - 1][currentSlotJ - 2]
 
-        #Owl Radius Dic
+        #Ugle synsradius dic
 
-        self.moveOwlDic = {'N' :  self.nSlot.dicSlot(), 'NE' :  self.neSlot.dicSlot(), 'E' :  self.eSlot.dicSlot(), 'SE' :  self.seSlot.dicSlot(), 'S' :  self.sSlot.dicSlot(), 'SW' :  self.swSlot.dicSlot(), 'W' :  self.wSlot.dicSlot(), 'NW' : self.wSlot.dicSlot(), 'NN' : self.nnSlot.dicSlot(), 'NNE' : self.nneSlot.dicSlot(), 'NNEE' : self.nneeSlot.dicSlot(), 'SSEE' : self.sseeSlot.dicSlot(), 'EE' : self.eeSlot.dicSlot(), 'SEE' : self.seeSlot.dicSlot(), 'SSEE' : self.sseeSlot.dicSlot(), 'SSE' : self.sseSlot.dicSlot(), 'SS' : self.ssSlot.dicSlot(), 'SSW' : self.sswSlot.dicSlot(), 'SSWW' : self.sswwSlot.dicSlot(), 'SWW' : self.swwSlot.dicSlot(), 'WW' : self.wwSlot.dicSlot(), 'NWW' : self.nwwSlot.dicSlot(), 'NNWW' : self.nnwwSlot.dicSlot(), 'NNW' : self.nnwSlot.dicSlot()}
-        self.seeSlot = self.grid[currentSlotI + 2][currentSlotJ - 1]
-        self.sseeSlot = self.grid[currentSlotI - 2][currentSlotJ + 2]
-        self.sseSlot = self.grid[currentSlotI + 1][currentSlotJ - 2]
+        self.moveOwlDic = {'NN' : self.nnSlot.dicSlot(), 'NNE' : self.nneSlot.dicSlot(), 'NNEE' : self.nneeSlot.dicSlot(), 'SSEE' : self.sseeSlot.dicSlot(), 'EE' : self.eeSlot.dicSlot(), 'SEE' : self.seeSlot.dicSlot(), 'SSEE' : self.sseeSlot.dicSlot(), 'SSE' : self.sseSlot.dicSlot(), 'SS' : self.ssSlot.dicSlot(), 'SSW' : self.sswSlot.dicSlot(), 'SSWW' : self.sswwSlot.dicSlot(), 'SWW' : self.swwSlot.dicSlot(), 'WW' : self.wwSlot.dicSlot(), 'NWW' : self.nwwSlot.dicSlot(), 'NNWW' : self.nnwwSlot.dicSlot(), 'NNW' : self.nnwSlot.dicSlot()}
 
-        #Return all mouse directions
+        #Retunere alle muse retninger
         return self.moveMouseDic
         return self.nSlot
         return self.neSlot
@@ -261,7 +259,7 @@ class Grid(object):
         return self.wSlot
         return self.nwSlot
 
-        # Return all Owl directions
+        #Retunere alle ugle retninger
         return self.moveOwlDic
         return self.nnSlot
         return self.nneSlot
@@ -283,65 +281,65 @@ class Grid(object):
 
 
     # printer alle felter ud i terminalen
-    def print_ten_Slots(self):
+    def printSlots(self):
         for i in range(0, 20):
-            print(self.grid[i][0].num_mice),
+            print(self.grid[i][0].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][1].num_mice),
+            print(self.grid[i][1].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][2].num_mice),
+            print(self.grid[i][2].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][3].num_mice),
+            print(self.grid[i][3].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][4].num_mice),
+            print(self.grid[i][4].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][5].num_mice),
+            print(self.grid[i][5].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][6].num_mice),
+            print(self.grid[i][6].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][7].num_mice),
+            print(self.grid[i][7].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][8].num_mice),
+            print(self.grid[i][8].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][9].num_mice),
+            print(self.grid[i][9].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][10].num_mice),
+            print(self.grid[i][10].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][11].num_mice),
+            print(self.grid[i][11].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][12].num_mice),
+            print(self.grid[i][12].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][13].num_mice),
+            print(self.grid[i][13].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][14].num_mice),
+            print(self.grid[i][14].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][15].num_mice),
+            print(self.grid[i][15].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][16].num_mice),
+            print(self.grid[i][16].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][17].num_mice),
+            print(self.grid[i][17].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][18].num_mice),
+            print(self.grid[i][18].state),
         print("\n")
         for i in range(0, 20):
-            print(self.grid[i][19].num_mice),
+            print(self.grid[i][19].state),
         print("\n")
         print("\n")

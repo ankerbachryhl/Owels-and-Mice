@@ -1,6 +1,6 @@
 
 class Stone(object):
 
-    pass
+    #Har valgt ikke at skrive noget i sten klassen for jeg synes ikke det var relevant
 
-    #Kun en mus kan gemme sig under en sten
+    pass
